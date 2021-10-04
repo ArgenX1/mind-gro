@@ -1,0 +1,28 @@
+body{
+    height: 100vh;
+    width: 100vw;
+}
+
+.journal{
+    border: solid black;
+    margin: 1rem 0 0 0;
+}
+
+.page{
+    padding: 1rem;
+    background-image: url(./pictures/parchment-paper.jpg)
+}
+
+.page-content{
+    padding: 1rem;
+}
+
+.new-entry{
+    padding: 1rem;
+}
+
+.controls{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
