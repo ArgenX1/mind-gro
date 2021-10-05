@@ -31,8 +31,21 @@ html, body {
     padding: 1rem;
 }
 
+li{
+    padding: 1rem;
+}
+
+li a{
+    text-decoration: none;
+    color: black;
+}
+
 .new-entry{
     padding: 1rem;
+}
+
+textarea{
+    height: 50vh;
 }
 
 .controls{
@@ -49,6 +62,10 @@ html, body {
     /* top: -100%; */
     left: 0;
     border: solid 10px;
+}
+
+.hidden{
+    display: none;
 }
 
 @media screen and (max-width: 992px)  {
@@ -89,3 +106,4 @@ html, body {
         display: none;
     }
 }
+
