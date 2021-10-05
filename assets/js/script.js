@@ -16,3 +16,8 @@ backButton.addEventListener("click", function() {
     newButton.classList.remove("hidden");
     backButton.classList.add("hidden")
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
