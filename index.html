@@ -22,14 +22,34 @@
         </div>
 
         <div class="row">
-            <div class="col s12 l6 pond">
-                <section>
-                    <img src="./assets/images/pond.jpg">
-                </section>
+            <div class="col s12 l6 pond center-align">
+                <img class="bg" src="./assets/images/pond.jpg">
+                <img class="circle-1" src="./assets/images/circle_1.png">
+                <!-- <img class="circle-2" src="./assets/images/circle_2.png"> -->
             </div>
-            <div class="col s12 l6 journal">
-                <section>
-                    <img src="./assets/images/parchment.png">
+            <div class="col s12 l6">
+                <section class="journal">
+                    <div class="page">
+                        <div class="page-content">
+                            <ul>
+                                <li>Day 1</li>
+                                <li>Day 2</li>
+                                <li>Day 3</li>
+                                <li>Day 4</li>
+                                <li>Day 5</li>
+                            </ul>
+                        </div>
+                        <div class="new-entry hidden">
+                            <textarea id="entry-page"></textarea>
+                            <button class="btn waves-effect waves-light brown" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                                </button>
+                        </div>
+                        <div class="controls">
+                            <a class="waves-effect waves-light btn-large brown" id="backButton">Back</a>
+                            <a class="waves-effect waves-light btn-large brown" id="newButton">New Journal Entry</a>
+                        </div>
+                    </div>
                 </section>
             </div>
         </div>
