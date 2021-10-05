@@ -13,7 +13,9 @@ html, body {
     /* max-height: 100%; */
     border-radius: 100%;
     object-fit: cover;
-    position: relative;
+    position: fixed;
+    top: 200px;
+    left: 175px;
     flex-shrink: 0;
 }
 
