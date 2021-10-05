@@ -1,11 +1,27 @@
-body{
+html, body {
+    /* height: 100%; */
     height: 100vh;
-    width: 100vw;
+    /* width: 100vw; */
+}
+
+.pond {
+    height: 80vh;
+}
+
+.pond .bg{
+    max-width: 40vh;
+    /* max-height: 100%; */
+    border-radius: 100%;
+    object-fit: cover;
+    position: fixed;
+    top: 200px;
+    left: 175px;
+    flex-shrink: 0;
 }
 
 .journal{
     border: solid black;
-    margin: 1rem 0 0 0;
+    /* margin: 1rem 0 0 0; */
 }
 
 .page{
@@ -17,8 +33,21 @@ body{
     padding: 1rem;
 }
 
+li{
+    padding: 1rem;
+}
+
+li a{
+    text-decoration: none;
+    color: black;
+}
+
 .new-entry{
     padding: 1rem;
+}
+
+textarea{
+    height: 50vh;
 }
 
 .controls{
@@ -26,3 +55,57 @@ body{
     justify-content: space-between;
     padding: 1rem;
 }
+
+.circle-1 {
+    /* position: absolute;
+    top: 200px;
+    /* left: -300px; */
+    position: absolute;
+    /* top: -100%; */
+    left: 0;
+    border: solid 10px;
+}
+
+.hidden{
+    display: none;
+}
+
+@media screen and (max-width: 992px)  {
+    .row .pond {
+        padding: 0;
+        /* margin-top: -20%; */
+    }
+
+    .pond .bg{
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        /* overflow: hidden; */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        object-fit: cover;
+        border-radius: 0;
+        /* object-position: 50% 50%; */
+    }
+
+    .circle-1 {
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        /* overflow: hidden; */
+        position: absolute;
+        top: -10%;
+        left: 0;
+        z-index: -1;
+        object-fit: cover;
+        border-radius: 0;
+        /* object-position: 50% 50%; */
+    }
+
+    .row .journal {
+        display: none;
+    }
+}
+
