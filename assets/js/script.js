@@ -1,22 +1,18 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-var mindGro = {
-    journalEntires: {
-        text,
-        emotion,
-        journalDay
-    },
-    flowerStatus : {
-        pedal1,
-        pedal2,
-        pedal3,
-        pedal4,
-        pedal5,
-    }
-
-
-}
+// var mindGro = {
+//     journalEntry: [{
+//         text,
+//         emotion,
+//         journalDay
+//     }],
+//     flowerStatus : [{
+//         pedalTone
+//     }],
+//        ifVisited,
+//        current,
+// }
 
 
 //function to pull data for tone analyzer
@@ -81,6 +77,38 @@ function getLocalStorage() {
     }
 }
 
+// function to add new journal data
+function setJournalEntry() {
+    sentence = $('#entry-page').val();
+    toneAnalzyer();
+    if (mindGro.journalEntry.length >= 5)
+        { resetData()}
+    else {
+        mindGro.journalEntry[mindGro.journalEntry.length] = {
+            text: sentence,
+            emotion: getMajorEmotion(),
+            journalDay: moment().format("M/D/YYYY")
+        }
+    }
+    var journals = $("#journalPage").children().children().children('span');
+    journals[mindGro.journalEntry.length-1].text(mindGro.journalEntry[mindGro.journalEntry.length-1].text);
+    console.log(journals);
+
+}
+// resets local storage and displays
+function resetData() {
+
+}
+
+
+
+function getMajorEmotion() {
+    var emotion = pulledTone.document_tone.tones[0].tone_id;
+    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
+        return emotion;
+    }
+    
+}
 
 const newButton = document.querySelector("#newButton");
 const backButton = document.querySelector("#backButton")
@@ -105,3 +133,5 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems);
   });
+
+  setJournalEntry();
