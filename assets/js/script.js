@@ -19,7 +19,7 @@ function toneAnalzyer() {
         },
     })
     .done(function (result) {
-        pulledTone = result
+        pulledTone = result;
         console.log(result);
     })
     .fail(function (result) {
@@ -39,21 +39,40 @@ function dailyQuote() {
     pulledDailyQuote = data;
     console.log(data);
   });
-
 }
 
 // from input given send out information
 function setQuoteData() {
     
 }
+
 // 
 function setJournalData () {
 
 }
+
+/* Jared - VARIABLES:
+emotion: string of 'fear', 'sadness', 'joy', or 'anger'
+currentLayer: int 1-5
+*/
+function renderLayer() {
+
+}
+
 const newButton = document.querySelector("#newButton");
 const backButton = document.querySelector("#backButton")
 const pageContent = document.querySelector(".page-content");
 const newEntry = document.querySelector(".new-entry");
+const padButton = document.querySelector(".pad-button");
+const glow = document.querySelector(".glow")
+
+padButton.addEventListener("mouseover", function() {
+    glow.classList.remove("hidden");
+});
+
+padButton.addEventListener("mouseout", function() {
+    glow.classList.add("hidden");
+});
 
 newButton.addEventListener("click", function() {
     pageContent.classList.add("hidden");
@@ -67,9 +86,24 @@ backButton.addEventListener("click", function() {
     newEntry.classList.add("hidden");
     newButton.classList.remove("hidden");
     backButton.classList.add("hidden")
-})
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems);
-  });
+});
+
+$(document).scroll(function() {
+    const pos = document.querySelector('.quote-card').getBoundingClientRect().top;
+    // console.log(document.querySelector('.quote-card').getBoundingClientRect().bottom/*  - $(window).scrollTop() */);
+    const inline = $('.inline-quote-card');
+    if (inline.hasClass('hidden') && pos < 0){
+        console.log('UNHIDING');
+        inline.removeClass('hidden');
+        inline.addClass("fix-card");
+        $('.quote-card').addClass('invisible');
+    } else if (!inline.hasClass('hidden') && pos >= 0) {
+        inline.addClass('hidden');
+        $('.quote-card').removeClass('invisible');
+    }
+});
