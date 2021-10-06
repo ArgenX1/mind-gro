@@ -1,6 +1,22 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
+var mindGro = {
+    journalEntires: {
+        text,
+        emotion,
+        journalDay
+    },
+    flowerStatus : {
+        pedal1,
+        pedal2,
+        pedal3,
+        pedal4,
+        pedal5,
+    }
+
+
+}
 
 
 //function to pull data for tone analyzer
@@ -47,9 +63,25 @@ function setQuoteData() {
     
 }
 // 
-function setJournalData () {
+function setJournalData() {
 
 }
+
+//function to save local storage
+function saveLocalStorage() {
+    if(mindGro !== undefined) {
+    localStorage.setItem('mindGro', JSON.stringify(mindGro));
+    }
+}
+//function to pull local storage
+function getLocalStorage() {
+    if(mindGro !== undefined)
+    {
+        //add later functions that will set up both the journal page and they the function that will set up the flower
+    }
+}
+
+
 const newButton = document.querySelector("#newButton");
 const backButton = document.querySelector("#backButton")
 const pageContent = document.querySelector(".page-content");
