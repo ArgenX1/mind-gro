@@ -1,22 +1,22 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-var mindGro = {
-    journalEntires: {
-        text,
-        emotion,
-        journalDay
-    },
-    flowerStatus : {
-        pedal1,
-        pedal2,
-        pedal3,
-        pedal4,
-        pedal5,
-    }
+// var mindGro = {
+//     journalEntires: {
+//         text,
+//         emotion,
+//         journalDay
+//     },
+//     flowerStatus : {
+//         pedal1,
+//         pedal2,
+//         pedal3,
+//         pedal4,
+//         pedal5,
+//     }
 
 
-}
+// }
 
 
 //function to pull data for tone analyzer
@@ -137,3 +137,7 @@ $(document).scroll(function() {
         $('.quote-card').removeClass('invisible');
     }
 });
+
+$(document).ready(function(){
+    $('.modal').modal({endingTop:"5%"});
+  });
