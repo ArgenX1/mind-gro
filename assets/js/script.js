@@ -1,15 +1,37 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-var mindGro;
+// var mindGro = [
+//     {
+//         text,
+//         emotion,
+//         journalDay
+//     },
+// }
+
+var mindGro = [
+    {
+        emotion: 'joy'
+    },
+    {
+        emotion: 'anger'
+    },
+    {
+        emotion: 'joy'
+    },
+    {
+        emotion: 'anger'
+    }
+];
+
 
 //function to pull data for tone analyzer
-function toneAnalzyer() {
+async function toneAnalzyer() {
 
     var apikey = "9pVWbtcmVEdbu4Qv0BINCyJ0lYmCnvqqrEyyl8TefSbb";
     var urlTone = "https://api.us-east.tone-analyzer.watson.cloud.ibm.com/instances/36c3b631-55ee-484b-89b6-0921340ffe10/v3/tone?version=2017-09-21";
 
-    $.ajax({
+    const tone = await $.ajax({
         type: "POST",
         url: urlTone,
         data: sentence,
@@ -21,11 +43,14 @@ function toneAnalzyer() {
     .done(function (result) {
         pulledTone = result;
         console.log(pulledTone);
+        return result;
     })
     .fail(function (result) {
         console.log("Error: ");
         console.log(pulledTone);
     });
+
+    return tone;
 }
 
 
@@ -88,10 +113,11 @@ function getLocalStorage() {
 }
 
 // function to add new journal data
-function setJournalEntry() {
+async function setJournalEntry() {
+    console.log("HELLO");
     sentence = $('#entry-page').val();
     $('#entry-page').html("");
-    toneAnalzyer();
+    await toneAnalzyer();
 
     if (mindGro.journalEntry.length >= 5)
         { resetData()}
@@ -105,8 +131,8 @@ function setJournalEntry() {
     var journals = $("#journalPage").children().children().children('span');
     journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
     saveLocalStorage();
-
 }
+
 // resets local storage and displays
 function resetData() {
             window.localStorage.removeItem('mindGro');
@@ -121,12 +147,11 @@ function resetData() {
 
 
 function getMajorEmotion() {
-    var emotion = pulledTone.document_tone.tones[0].tone_id;
-    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
+    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
+    
+    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger" || emotion == "default"){
         return emotion;
     }
-    
-    
 }
 function init() {
     dailyQuote();
@@ -137,7 +162,21 @@ emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
 */
 function renderLayer() {
+    for (var i = mindGro.length - 1; i >= 0; i--) {
+        const img = document.createElement('div');
+        const filePath = getFilePath(i + 1, mindGro[i].emotion);
+        console.log(filePath);
+        img.innerHTML = `<img class="flower" src="${filePath}">`;
+        env.appendChild(img);
+    }
 
+    const img = document.createElement('div');
+    img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
+    env.appendChild(img);
+}
+
+function getFilePath(layer, tone) {
+    return `./assets/images/${tone}/layer${layer}-${tone}.png`;
 }
 
 const newButton = document.querySelector("#newButton");
@@ -146,6 +185,7 @@ const pageContent = document.querySelector(".page-content");
 const newEntry = document.querySelector(".new-entry");
 const padButton = document.querySelector(".pad-button");
 const glow = document.querySelector(".glow")
+const env = document.querySelector("#env");
 
 padButton.addEventListener("mouseover", function() {
     glow.classList.remove("hidden");
@@ -189,11 +229,16 @@ $(document).scroll(function() {
     }
 });
 
+$('#intro').click(function() {
+    this.modal();
+});
 
 $(document).ready(function(){
-    $('.modal').modal({endingTop:"5%"});
+    $('#modal1').modal({endingTop:"5%"});
+    $('#intro').modal();
   });
 
 $('#submitbtn').click(setJournalEntry);
 
+renderLayer();
 init();
