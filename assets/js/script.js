@@ -1,28 +1,7 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-// var mindGro = [
-//     {
-//         text,
-//         emotion,
-//         journalDay
-//     },
-// }
-
-var mindGro = [
-    {
-        emotion: 'joy'
-    },
-    {
-        emotion: 'anger'
-    },
-    {
-        emotion: 'joy'
-    },
-    {
-        emotion: 'anger'
-    }
-];
+var mindGro;
 
 
 //function to pull data for tone analyzer
@@ -75,8 +54,6 @@ function setQuoteData() {
     if(randomQuote.author == null){
         $('#quote-author').text(" - Unknown")
     }
-    
-
 }
 
 // 
@@ -113,70 +90,80 @@ function getLocalStorage() {
 
 // function to add new journal data
 async function setJournalEntry() {
-
+    $('#modal1').modal('close');
     sentence = $('#entry-page').val();
     $('#entry-page').text("");
     await toneAnalzyer();
 
     if (mindGro.journalEntry.length >= 5)
-        { resetData()}
+        { clearEntries()}
 
         mindGro.journalEntry[mindGro.journalEntry.length] = {
             entry: sentence,
             emotion: getMajorEmotion(),
             journalDay: moment().format("M/D/YYYY")
         }
-
-    var journals = $("#journalPage").children().children().children('span');
-    journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
+        console.log(mindGro.journalEntry.length);
     saveLocalStorage();
     renderLayer();
 }
 
-// resets local storage and displays
-function resetData() {
-            window.localStorage.removeItem('mindGro');
-            var journals = $("#journalPage").children().children().children('span');
-            for (let i = 0; i < journals.length; i++) {
-                journals.eq(i).text("");
-                //reset the flower im not sure how im going to do that yet probably just set href to ""
-            }
-            $('.flower').remove()
-            getLocalStorage();
+function clearEntries() {
+    window.localStorage.removeItem('mindGro');
+    resetRender();
+    getLocalStorage();
 }
-
-
 
 function getMajorEmotion() {
     var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
     
-    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger" || emotion == "default"){
+    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
         return emotion;
     }
-    else {
-        return "default";
-    }
+
+    return "default";
 }
+
 function init() {
     dailyQuote();
     setJournalData();
     renderLayer();
 }
-/* Jared - VARIABLES:
-emotion: string of 'fear', 'sadness', 'joy', or 'anger'
-currentLayer: int 1-5
-*/
+
 function renderLayer() {
+    resetRender();
     for (var i = mindGro.journalEntry.length - 1; i >= 0; i--) {
         const img = document.createElement('div');
         const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
+        console.log(filePath);
         img.innerHTML = `<img class="flower" src="${filePath}">`;
         env.appendChild(img);
     }
 
-    const img = document.createElement('div');
-    img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
-    env.appendChild(img);
+    for (var i = 0; i < mindGro.journalEntry.length; i++) {
+        const entry = document.createElement('li');
+        entry.classList.add('journal-entry');
+        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${i + 1}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
+        journalPage.appendChild(entry);
+    }
+    
+    if (mindGro.journalEntry.length) {
+        const img = document.createElement('div');
+        img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
+        env.appendChild(img);
+    }
+}
+
+function resetRender() {
+    const entries = document.querySelectorAll(".journal-entry");
+    const flowers = document.querySelectorAll(".flower");
+    for (let i = 0; i < entries.length; i++) {
+        entries[i].remove();
+        //reset the flower im not sure how im going to do that yet probably just set href to ""
+    }
+    for (let i = 0; i < flowers.length; i++) {
+        flowers[i].remove();
+    }
 }
 
 function getFilePath(layer, tone) {
@@ -190,6 +177,8 @@ const newEntry = document.querySelector(".new-entry");
 const padButton = document.querySelector(".pad-button");
 const glow = document.querySelector(".glow")
 const env = document.querySelector("#env");
+const clearButton = document.querySelector("#clear-btn");
+const journalPage = document.querySelector("#journalPage");
 
 padButton.addEventListener("mouseover", function() {
     glow.classList.remove("hidden");
@@ -213,23 +202,11 @@ backButton.addEventListener("click", function() {
     backButton.classList.add("hidden")
 });
 
+clearButton.addEventListener("click", clearEntries)
+
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems);
-});
-
-$(document).scroll(function() {
-    const pos = document.querySelector('.quote-card').getBoundingClientRect().top;
-    // console.log(document.querySelector('.quote-card').getBoundingClientRect().bottom/*  - $(window).scrollTop() */);
-    const inline = $('.inline-quote-card');
-    if (inline.hasClass('hidden') && pos < 0){
-        inline.removeClass('hidden');
-        inline.addClass("fix-card");
-        $('.quote-card').addClass('invisible');
-    } else if (!inline.hasClass('hidden') && pos >= 0) {
-        inline.addClass('hidden');
-        $('.quote-card').removeClass('invisible');
-    }
 });
 
 $('#intro').click(function() {

@@ -65,11 +65,16 @@ img {
     /* background-image: url(./pictures/parchment-paper.jpg) */
     background-color: rgba(0, 0, 0, 0);
     color: white;
-    
 }
 
 .page-content {
     padding: 1rem;
+}
+
+#clear-btn {
+    position: absolute;
+    top: 3%;
+    left: 3%;
 }
 
 li{
