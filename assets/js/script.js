@@ -87,7 +87,7 @@ function setJournalData() {
         var journals = $("#journalPage").children().children().children('span');
             for (let i = 0; i < mindGro.journalEntry.length; i++) {
                 journals.eq(i).text(mindGro.journalEntry[i].entry);
-                //reset the flower im not sure how im going to do that yet
+                
             
             }
     }
@@ -141,6 +141,7 @@ function resetData() {
                 journals.eq(i).text("");
                 //reset the flower im not sure how im going to do that yet probably just set href to ""
             }
+            $('.flower').remove()
             getLocalStorage();
 }
 
@@ -152,10 +153,14 @@ function getMajorEmotion() {
     if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger" || emotion == "default"){
         return emotion;
     }
+    else {
+        return "default";
+    }
 }
 function init() {
     dailyQuote();
     setJournalData();
+    renderLayer();
 }
 /* Jared - VARIABLES:
 emotion: string of 'fear', 'sadness', 'joy', or 'anger'
@@ -240,5 +245,4 @@ $(document).ready(function(){
 
 $('#submitbtn').click(setJournalEntry);
 
-renderLayer();
 init();
