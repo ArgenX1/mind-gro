@@ -37,13 +37,22 @@ function dailyQuote() {
   })
   .then(function(data) {
     pulledDailyQuote = data;
+    setQuoteData();
     console.log(data);
   });
 }
 
 // from input given send out information
 function setQuoteData() {
+    var randomQuote = pulledDailyQuote[Math.floor(Math.random()*pulledDailyQuote.length)]
+    console.log(randomQuote);
+    $('#quote-text').text(randomQuote.text)
+    $('#quote-author').text(" - " + randomQuote.author)
+    if(randomQuote.author == null){
+        $('#quote-author').text(" - Unknown")
+    }
     
+
 }
 
 // 
@@ -120,7 +129,7 @@ function getMajorEmotion() {
     
 }
 function init() {
-    // setQuoteData();
+    dailyQuote();
     setJournalData();
 }
 /* Jared - VARIABLES:

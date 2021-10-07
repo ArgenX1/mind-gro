@@ -8,6 +8,12 @@ body {
     object-fit: cover;
 }
 
+.quote-card {
+    background: transparent;
+    margin-left: 1rem;
+    font-style: italic;
+}
+
 img {
     object-fit: cover;
     width: 100%;
