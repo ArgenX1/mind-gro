@@ -63,8 +63,6 @@ function setJournalData() {
         var journals = $("#journalPage").children().children().children('span');
             for (let i = 0; i < mindGro.journalEntry.length; i++) {
                 journals.eq(i).text(mindGro.journalEntry[i].entry);
-                
-            
             }
     }
     else {return;}
@@ -76,6 +74,7 @@ function saveLocalStorage() {
     localStorage.setItem('mindGro', JSON.stringify(mindGro));
     }
 }
+
 //function to pull local storage
 function getLocalStorage() {
     mindGro = JSON.parse(window.localStorage.getItem('mindGro'));
@@ -92,15 +91,18 @@ function getLocalStorage() {
 async function setJournalEntry() {
     $('#modal1').modal('close');
     sentence = $('#entry-page').val();
+    if (!sentence) return;
     $('#entry-page').text("");
     await toneAnalzyer();
 
-    if (mindGro.journalEntry.length >= 5)
-        { clearEntries()}
+    const majorEmotion = getMajorEmotion();
+
+    if (mindGro.journalEntry.length >= 4)
+        { clearEntries() }
 
         mindGro.journalEntry[mindGro.journalEntry.length] = {
             entry: sentence,
-            emotion: getMajorEmotion(),
+            emotion: majorEmotion,
             journalDay: moment().format("M/D/YYYY")
         }
         console.log(mindGro.journalEntry.length);
@@ -115,13 +117,13 @@ function clearEntries() {
 }
 
 function getMajorEmotion() {
-    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
+    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "joy";
     
     if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
         return emotion;
     }
 
-    return "default";
+    return "joy";
 }
 
 function init() {
@@ -218,6 +220,12 @@ $(document).ready(function(){
     $('#intro').modal();
   });
 
-$('#submitbtn').click(setJournalEntry);
+$('#submitbtn').click(async function() {
+    pageContent.classList.remove("hidden");
+    newEntry.classList.add("hidden");
+    newButton.classList.remove("hidden");
+    backButton.classList.add("hidden")
+    await setJournalEntry();
+});
 
 init();
