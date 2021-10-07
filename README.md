@@ -24,7 +24,7 @@ To use Mind Gro is very easy, simply click on the lilly pad in the center of the
 
 - IBM Watson Tone Analyzer - https://www.ibm.com/cloud/watson-tone-analyzer
 
-- 
+- Quote API - https://type.fit/api/quotes
 
 ## Links
 
@@ -32,4 +32,6 @@ https://github.com/ArgenX1/mind-gro
 
 https://argenx1.github.io/mind-gro/
 
-![screenshot]
+![screenshot1](assets\screenshot1.png)
+
+![screenshot2](assets\screenshot2.png)

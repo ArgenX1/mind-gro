@@ -1,29 +1,6 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-// var mindGro = [
-//     {
-//         text,
-//         emotion,
-//         journalDay
-//     },
-// ]
-
-// var mindGro = [
-//     {
-//         emotion: 'joy'
-//     },
-//     {
-//         emotion: 'anger'
-//     },
-//     {
-//         emotion: 'joy'
-//     },
-//     {
-//         emotion: 'sadness'
-//     }
-// ];
-
 var mindGro;
 
 
@@ -44,7 +21,6 @@ async function toneAnalzyer() {
     })
     .done(function (result) {
         pulledTone = result;
-        console.log(pulledTone);
         return result;
     })
     .fail(function (result) {
@@ -65,14 +41,14 @@ function dailyQuote() {
   .then(function(data) {
     pulledDailyQuote = data;
     setQuoteData();
-    console.log(data);
+
   });
 }
 
 // from input given send out information
 function setQuoteData() {
     var randomQuote = pulledDailyQuote[Math.floor(Math.random()*pulledDailyQuote.length)]
-    console.log(randomQuote);
+
     $('#quote-text').text(randomQuote.text)
     $('#quote-author').text(" - " + randomQuote.author)
     if(randomQuote.author == null){
@@ -87,7 +63,7 @@ function setJournalData() {
         var journals = $("#journalPage").children().children().children('span');
             for (let i = 0; i < mindGro.journalEntry.length; i++) {
                 journals.eq(i).text(mindGro.journalEntry[i].entry);
-                //reset the flower im not sure how im going to do that yet
+                
             
             }
     }
@@ -116,33 +92,20 @@ function getLocalStorage() {
 async function setJournalEntry() {
     $('#modal1').modal('close');
     sentence = $('#entry-page').val();
-    $('#entry-page').html("");
+    $('#entry-page').text("");
     await toneAnalzyer();
 
     if (mindGro.journalEntry.length >= 5)
-        { resetData()}
-        console.log(mindGro.journalEntry.length);
+        { clearEntries()}
+
         mindGro.journalEntry[mindGro.journalEntry.length] = {
             entry: sentence,
             emotion: getMajorEmotion(),
             journalDay: moment().format("M/D/YYYY")
         }
         console.log(mindGro.journalEntry.length);
-    // var journals = $("#journalPage").children().children().children('span');
-    // journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
     saveLocalStorage();
     renderLayer();
-}
-
-// resets local storage and displays
-function resetData() {
-    window.localStorage.removeItem('mindGro');
-    var journals = $("#journalPage").children().children().children('span');
-    for (let i = 0; i < journals.length; i++) {
-        journals.eq(i).text("");
-        //reset the flower im not sure how im going to do that yet probably just set href to ""
-    }
-    getLocalStorage();
 }
 
 function clearEntries() {
@@ -150,8 +113,6 @@ function clearEntries() {
     resetRender();
     getLocalStorage();
 }
-
-
 
 function getMajorEmotion() {
     var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
@@ -169,10 +130,6 @@ function init() {
     renderLayer();
 }
 
-/* Jared - VARIABLES:
-emotion: string of 'fear', 'sadness', 'joy', or 'anger'
-currentLayer: int 1-5
-*/
 function renderLayer() {
     resetRender();
     for (var i = mindGro.journalEntry.length - 1; i >= 0; i--) {
@@ -181,19 +138,23 @@ function renderLayer() {
         console.log(filePath);
         img.innerHTML = `<img class="flower" src="${filePath}">`;
         env.appendChild(img);
-        const entry = document.createElement('li');
-        entry.classList.add('journal-entry');
-        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${mindGro.journalEntry.length - i}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
-        journalPage.appendChild(entry);
     }
 
-    const img = document.createElement('div');
-    img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
-    env.appendChild(img);
+    for (var i = 0; i < mindGro.journalEntry.length; i++) {
+        const entry = document.createElement('li');
+        entry.classList.add('journal-entry');
+        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${i + 1}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
+        journalPage.appendChild(entry);
+    }
+    
+    if (mindGro.journalEntry.length) {
+        const img = document.createElement('div');
+        img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
+        env.appendChild(img);
+    }
 }
 
 function resetRender() {
-    var journals = $("#journalPage").children().children().children('span');
     const entries = document.querySelectorAll(".journal-entry");
     const flowers = document.querySelectorAll(".flower");
     for (let i = 0; i < entries.length; i++) {
