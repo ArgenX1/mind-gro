@@ -26,6 +26,16 @@ To use Mind Gro is very easy, simply click on the lilly pad in the center of the
 
 - Quote API - https://type.fit/api/quotes
 
+**Assets**
+
+- Materialize - https://materializecss.com/
+
+- jQuery - https://jquery.com/
+
+- Moment.js - https://momentjs.com/
+
+- Google Fonts - https://fonts.google.com/
+
 ## Links
 
 https://github.com/ArgenX1/mind-gro
