@@ -11,62 +11,79 @@
         <title>Lotus Root</title>
     </head>
     <body>
-        <div class="container">
+        <!-- <div class="container">
             <header class="row">
                 <div class="col s12">
-                    <div class="card">
+                    <div class="card quote-card">
                         <h4 class="card-content" id="quote">THIS IS A BIG QUOTE</h4>
                     </div>
                 </div>
             </header>
-        </div>
+        </div> -->
 
-        <div class="row">
-            <div class="col s12 l6 pond center-align">
-                <img class="bg" src="./assets/images/pond.jpg">
-                <!-- <img class="circle-1" src="./assets/images/circle_1.png"> -->
-                <!-- <img class="circle-2" src="./assets/images/circle_2.png"> -->
-            </div>
-            <div class="col s12 l6">
-                <section class="journal">
-                    <div class="page">
-                        <div class="page-content">
-                            <h2 class="center-align">Mind Gro Journal</h2>
-                            <p class="center-align">Using descriptive language, take time to reflect on how your day went or how you want it to go.</p>
-                            <ul class="collapsible" id="journalPage">
-                                <li>
-                                    <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 1</div>
-                                    <div class="collapsible-body"><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam nisi voluptate tempora nesciunt! Rem vel cumque delectus facilis odio aut qui praesentium asperiores et iure, quam suscipit commodi doloremque expedita.</span></div>
-                                </li>
-                                <li>
-                                    <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 2</div>
-                                    <div class="collapsible-body"><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam nisi voluptate tempora nesciunt! Rem vel cumque delectus facilis odio aut qui praesentium asperiores et iure, quam suscipit commodi doloremque expedita.</span></div>
-                                </li>
-                                <li>
-                                    <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 3</div>
-                                    <div class="collapsible-body"><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam nisi voluptate tempora nesciunt! Rem vel cumque delectus facilis odio aut qui praesentium asperiores et iure, quam suscipit commodi doloremque expedita.</span></div>
-                                </li>
-                                <li>
-                                    <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 4</div>
-                                    <div class="collapsible-body"><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam nisi voluptate tempora nesciunt! Rem vel cumque delectus facilis odio aut qui praesentium asperiores et iure, quam suscipit commodi doloremque expedita.</span></div>
-                                </li>
+        <img src="./assets/images/vulvic.png">
+        <img class="hidden glow" src="./assets/images/glow.png">
+        <img src="./assets/images/lilypads.png">
+        <!-- <img class="flower" src="./assets/images/flower.png"> -->
+        <!-- <img class="flower" src="./assets/images/anger/layer4-anger.png">
+        <img class="flower" src="./assets/images/fear/layer3-fear.png">
+        <img class="flower" src="./assets/images/anger/layer2-anger.png">
+        <img class="flower" src="./assets/images/fear/layer1-fear.png">
+        <img class="flower" src="./assets/images/middle.png"> -->
 
-                            </ul>
+        <a class="pad-button modal-trigger" data-target="modal1"></a>
+        
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal bottom-sheet">
+            <section class="journal">
+                <div class="page">
+                    <div class="page-content">
+                        <h2 class="center-align">Mind Gro Journal</h2>
+                        <p class="center-align">Using descriptive language, take time to reflect on how your day went or how you want it to go.</p>
+                        <ul class="collapsible popout" id="journalPage">
+                            <li>
+                                <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 1</div>
+                                <div class="collapsible-body"><span></span></div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 2</div>
+                                <div class="collapsible-body"><span></span></div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 3</div>
+                                <div class="collapsible-body"><span></span></div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 4</div>
+                                <div class="collapsible-body"><span></span></div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day 5</div>
+                                <div class="collapsible-body"><span></span></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="new-entry hidden">
+                        <textarea id="entry-page"></textarea>
+                        <button class="btn waves-effect waves-light brown" type="click" name="action" id="submitbtn">Submit
+                            <i class="material-icons right">send</i>
+                            </button>
+                    </div>
+                    <div class="controls row">
+                        <div class="col s12 m6">
+                            <a class="waves-effect waves-light btn-large brown hidden col s12" id="backButton">Back</a>
+                            <a class="waves-effect waves-light btn-large brown col s12" id="newButton">New Journal Entry</a>
                         </div>
-                        <div class="new-entry hidden">
-                            <textarea id="entry-page"></textarea>
-                            <button class="btn waves-effect waves-light brown" type="submit" name="action">Submit
-                                <i class="material-icons right">send</i>
-                              </button>
-                        </div>
-                        <div class="controls">
-                            <a class="waves-effect waves-light btn-large brown hidden" id="backButton">Back</a>
-                            <a class="waves-effect waves-light btn-large brown" id="newButton">New Journal Entry</a>
+                        <div class="col s12 m6">
+                            <a href="#!" class="modal-close waves-effect waves-light btn-large brown col s12">Exit</a>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
+
         
 
         <script

@@ -1,27 +1,49 @@
 html, body {
-    /* height: 100%; */
     height: 100vh;
-    /* width: 100vw; */
 }
 
-.pond {
-    height: 80vh;
-}
 
-.pond .bg{
-    max-width: 40vh;
-    /* max-height: 100%; */
-    border-radius: 100%;
+body {
+    background-color: rgb(86,201,181);
     object-fit: cover;
+}
+
+img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.flower {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.pad-button {
+    border-radius: 100%;
+    position: absolute;
+    width: 25%;
+    height: 30%;
+    top: 25%;
+    left: 37%;
+    background: transparent;
+    border: none;
+}
+
+.fix-card {
     position: fixed;
-    top: 200px;
-    left: 175px;
-    flex-shrink: 0;
+    top: 10%;
+    left: 10%;
 }
 
 .journal{
     border: solid black;
-    /* margin: 1rem 0 0 0; */
 }
 
 .page{
@@ -29,7 +51,7 @@ html, body {
     background-image: url(./pictures/parchment-paper.jpg)
 }
 
-.page-content{
+.page-content {
     padding: 1rem;
 }
 
@@ -50,62 +72,30 @@ textarea{
     height: 50vh;
 }
 
-.controls{
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-}
-
-.circle-1 {
-    /* position: absolute;
-    top: 200px;
-    /* left: -300px; */
-    position: absolute;
-    /* top: -100%; */
-    left: 0;
-    border: solid 10px;
-}
-
 .hidden{
     display: none;
 }
 
-@media screen and (max-width: 992px)  {
-    .row .pond {
-        padding: 0;
-        /* margin-top: -20%; */
-    }
+.invisible {
+    visibility: hidden;
+}
 
-    .pond .bg{
-        max-width: 100%;
-        width: 100%;
-        height: 100%;
-        /* overflow: hidden; */
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        object-fit: cover;
-        border-radius: 0;
-        /* object-position: 50% 50%; */
-    }
+#modal1{
+    max-height: 100%;
+}
 
-    .circle-1 {
-        max-width: 100%;
-        width: 100%;
-        height: 100%;
-        /* overflow: hidden; */
-        position: absolute;
-        top: -10%;
-        left: 0;
-        z-index: -1;
-        object-fit: cover;
-        border-radius: 0;
-        /* object-position: 50% 50%; */
+@media screen and (max-width: 1024px)  {
+    .btn {
+        left: 24%;
+        width: 50%;
     }
 
     .row .journal {
         display: none;
+    }
+
+    .controls a{
+        margin-top: 1rem;
     }
 }
 
