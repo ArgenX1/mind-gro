@@ -128,9 +128,10 @@ async function setJournalEntry() {
             journalDay: moment().format("M/D/YYYY")
         }
         console.log(mindGro.journalEntry.length);
-    var journals = $("#journalPage").children().children().children('span');
-    journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
+    // var journals = $("#journalPage").children().children().children('span');
+    // journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
     saveLocalStorage();
+    renderLayer();
 }
 
 // resets local storage and displays
@@ -141,6 +142,12 @@ function resetData() {
         journals.eq(i).text("");
         //reset the flower im not sure how im going to do that yet probably just set href to ""
     }
+    getLocalStorage();
+}
+
+function clearEntries() {
+    window.localStorage.removeItem('mindGro');
+    resetRender();
     getLocalStorage();
 }
 
@@ -161,22 +168,41 @@ function init() {
     setJournalData();
     renderLayer();
 }
+
 /* Jared - VARIABLES:
 emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
 */
 function renderLayer() {
+    resetRender();
     for (var i = mindGro.journalEntry.length - 1; i >= 0; i--) {
         const img = document.createElement('div');
         const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
         console.log(filePath);
         img.innerHTML = `<img class="flower" src="${filePath}">`;
         env.appendChild(img);
+        const entry = document.createElement('li');
+        entry.classList.add('journal-entry');
+        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${mindGro.journalEntry.length - i}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
+        journalPage.appendChild(entry);
     }
 
     const img = document.createElement('div');
     img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
     env.appendChild(img);
+}
+
+function resetRender() {
+    var journals = $("#journalPage").children().children().children('span');
+    const entries = document.querySelectorAll(".journal-entry");
+    const flowers = document.querySelectorAll(".flower");
+    for (let i = 0; i < entries.length; i++) {
+        entries[i].remove();
+        //reset the flower im not sure how im going to do that yet probably just set href to ""
+    }
+    for (let i = 0; i < flowers.length; i++) {
+        flowers[i].remove();
+    }
 }
 
 function getFilePath(layer, tone) {
@@ -190,6 +216,8 @@ const newEntry = document.querySelector(".new-entry");
 const padButton = document.querySelector(".pad-button");
 const glow = document.querySelector(".glow")
 const env = document.querySelector("#env");
+const clearButton = document.querySelector("#clear-btn");
+const journalPage = document.querySelector("#journalPage");
 
 padButton.addEventListener("mouseover", function() {
     glow.classList.remove("hidden");
@@ -212,6 +240,8 @@ backButton.addEventListener("click", function() {
     newButton.classList.remove("hidden");
     backButton.classList.add("hidden")
 });
+
+clearButton.addEventListener("click", clearEntries)
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
