@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="./assets/css/materialize.min.css"  media="screen,projection"/>
+        <link rel="stylesheet" href="./assets/css/style.css"/>
+
+        <title>Lotus Root</title>
+    </head>
+    <body>
+        <div class="">
+            <header class="row">
+                <div class="col s12 m6 left">
+                    <div class="quote-card">
+                        <h4 class="card-content" id="quote-text"></h4>
+                        <p id="quote-author"></p>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <div id="env">    
+            <img src="./assets/images/vulvic.png">
+            <img class="hidden glow" src="./assets/images/glow.png">
+            <img src="./assets/images/lilypads.png">
+        </div>
+
+        <a class="pad-button modal-trigger" data-target="modal1"></a>
+        
+
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal bottom-sheet">
+            <section class="journal">
+                <div class="page">
+                    <div class="page-content">
+                        <div class="row">
+                            <a href="#!" id="clear-btn" class="modal-close waves-effect waves-light btn-large brown col s2">Clear</a>
+                            <h2 class="center-align">Mind Gro Journal</h2>
+                            <p class="center-align">Using descriptive language, take time to reflect on how your day went or how you want it to go.</p>
+                            <ul class="collapsible popout" id="journalPage"></ul>
+                        </div>
+                    </div>
+                    <div class="new-entry hidden">
+                        <textarea id="entry-page"></textarea>
+                        <div class="row">
+                            <button class="btn-large waves-effect waves-light brown col s6 offset-s3" type="click" name="action" id="submitbtn">Submit</button>
+                        </div>
+                    </div>
+                    <div class="controls row">
+                        <div class="col s12 m6">
+                            <a class="waves-effect waves-light btn-large brown hidden col s12" id="backButton">Back</a>
+                            <a class="waves-effect waves-light btn-large brown col s12" id="newButton">New Journal Entry</a>
+                        </div>
+                        <div class="col s12 m6">
+                            <a href="#!" class="modal-close waves-effect waves-light btn-large brown col s12">Exit</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        
+
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+        ></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="./assets/js/materialize.min.js"></script>
+        <script type="text/javascript" src="./assets/js/script.js"></script>
+    </body>
+</html>
