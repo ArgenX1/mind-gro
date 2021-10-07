@@ -42,7 +42,6 @@ async function toneAnalzyer() {
     })
     .done(function (result) {
         pulledTone = result;
-        console.log(pulledTone);
         return result;
     })
     .fail(function (result) {
@@ -63,14 +62,14 @@ function dailyQuote() {
   .then(function(data) {
     pulledDailyQuote = data;
     setQuoteData();
-    console.log(data);
+
   });
 }
 
 // from input given send out information
 function setQuoteData() {
     var randomQuote = pulledDailyQuote[Math.floor(Math.random()*pulledDailyQuote.length)]
-    console.log(randomQuote);
+
     $('#quote-text').text(randomQuote.text)
     $('#quote-author').text(" - " + randomQuote.author)
     if(randomQuote.author == null){
@@ -114,23 +113,24 @@ function getLocalStorage() {
 
 // function to add new journal data
 async function setJournalEntry() {
-    console.log("HELLO");
+
     sentence = $('#entry-page').val();
-    $('#entry-page').html("");
+    $('#entry-page').text("");
     await toneAnalzyer();
 
     if (mindGro.journalEntry.length >= 5)
         { resetData()}
-        console.log(mindGro.journalEntry.length);
+
         mindGro.journalEntry[mindGro.journalEntry.length] = {
             entry: sentence,
             emotion: getMajorEmotion(),
             journalDay: moment().format("M/D/YYYY")
         }
-        console.log(mindGro.journalEntry.length);
+
     var journals = $("#journalPage").children().children().children('span');
     journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
     saveLocalStorage();
+    renderLayer();
 }
 
 // resets local storage and displays
@@ -167,10 +167,9 @@ emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
 */
 function renderLayer() {
-    for (var i = mindGro.length - 1; i >= 0; i--) {
+    for (var i = mindGro.journalEntry.length - 1; i >= 0; i--) {
         const img = document.createElement('div');
-        const filePath = getFilePath(i + 1, mindGro[i].emotion);
-        console.log(filePath);
+        const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
         img.innerHTML = `<img class="flower" src="${filePath}">`;
         env.appendChild(img);
     }
@@ -224,7 +223,6 @@ $(document).scroll(function() {
     // console.log(document.querySelector('.quote-card').getBoundingClientRect().bottom/*  - $(window).scrollTop() */);
     const inline = $('.inline-quote-card');
     if (inline.hasClass('hidden') && pos < 0){
-        console.log('UNHIDING');
         inline.removeClass('hidden');
         inline.addClass("fix-card");
         $('.quote-card').addClass('invisible');
