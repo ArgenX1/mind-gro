@@ -14,24 +14,24 @@ var mindGro = [
         emotion: 'joy'
     },
     {
-        emotion: 'joy'
+        emotion: 'anger'
     },
     {
         emotion: 'joy'
     },
     {
-        emotion: 'joy'
+        emotion: 'anger'
     }
 ];
 
 
 //function to pull data for tone analyzer
-function toneAnalzyer() {
+async function toneAnalzyer() {
 
     var apikey = "9pVWbtcmVEdbu4Qv0BINCyJ0lYmCnvqqrEyyl8TefSbb";
     var urlTone = "https://api.us-east.tone-analyzer.watson.cloud.ibm.com/instances/36c3b631-55ee-484b-89b6-0921340ffe10/v3/tone?version=2017-09-21";
 
-    $.ajax({
+    const tone = await $.ajax({
         type: "POST",
         url: urlTone,
         data: sentence,
@@ -42,12 +42,15 @@ function toneAnalzyer() {
     })
     .done(function (result) {
         pulledTone = result;
-        console.log(result);
+        console.log(pulledTone);
+        return result;
     })
     .fail(function (result) {
         console.log("Error: ");
-        console.log(result);
+        console.log(pulledTone);
     });
+
+    return tone;
 }
 
 
@@ -59,18 +62,36 @@ function dailyQuote() {
   })
   .then(function(data) {
     pulledDailyQuote = data;
+    setQuoteData();
     console.log(data);
   });
 }
 
 // from input given send out information
 function setQuoteData() {
+    var randomQuote = pulledDailyQuote[Math.floor(Math.random()*pulledDailyQuote.length)]
+    console.log(randomQuote);
+    $('#quote-text').text(randomQuote.text)
+    $('#quote-author').text(" - " + randomQuote.author)
+    if(randomQuote.author == null){
+        $('#quote-author').text(" - Unknown")
+    }
     
+
 }
 
 // 
 function setJournalData() {
-
+    getLocalStorage();
+    if(mindGro !== undefined) {
+        var journals = $("#journalPage").children().children().children('span');
+            for (let i = 0; i < mindGro.journalEntry.length; i++) {
+                journals.eq(i).text(mindGro.journalEntry[i].entry);
+                //reset the flower im not sure how im going to do that yet
+            
+            }
+    }
+    else {return;}
 }
 
 //function to save local storage
@@ -81,12 +102,61 @@ function saveLocalStorage() {
 }
 //function to pull local storage
 function getLocalStorage() {
-    if(mindGro !== undefined)
+    mindGro = JSON.parse(window.localStorage.getItem('mindGro'));
+    if(mindGro == undefined)
     {
+        mindGro = {
+            journalEntry: [],    
+        }
         //add later functions that will set up both the journal page and they the function that will set up the flower
     }
 }
 
+// function to add new journal data
+async function setJournalEntry() {
+    console.log("HELLO");
+    sentence = $('#entry-page').val();
+    $('#entry-page').html("");
+    await toneAnalzyer();
+
+    if (mindGro.journalEntry.length >= 5)
+        { resetData()}
+        console.log(mindGro.journalEntry.length);
+        mindGro.journalEntry[mindGro.journalEntry.length] = {
+            entry: sentence,
+            emotion: getMajorEmotion(),
+            journalDay: moment().format("M/D/YYYY")
+        }
+        console.log(mindGro.journalEntry.length);
+    var journals = $("#journalPage").children().children().children('span');
+    journals.eq(mindGro.journalEntry.length-1).text(mindGro.journalEntry[mindGro.journalEntry.length-1].entry);
+    saveLocalStorage();
+}
+
+// resets local storage and displays
+function resetData() {
+            window.localStorage.removeItem('mindGro');
+            var journals = $("#journalPage").children().children().children('span');
+            for (let i = 0; i < journals.length; i++) {
+                journals.eq(i).text("");
+                //reset the flower im not sure how im going to do that yet probably just set href to ""
+            }
+            getLocalStorage();
+}
+
+
+
+function getMajorEmotion() {
+    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
+    
+    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger" || emotion == "default"){
+        return emotion;
+    }
+}
+function init() {
+    dailyQuote();
+    setJournalData();
+}
 /* Jared - VARIABLES:
 emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
@@ -168,4 +238,7 @@ $(document).ready(function(){
     $('#intro').modal();
   });
 
+$('#submitbtn').click(setJournalEntry);
+
 renderLayer();
+init();
