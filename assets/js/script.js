@@ -7,22 +7,24 @@ var pulledDailyQuote;
 //         emotion,
 //         journalDay
 //     },
-// }
+// ]
 
-var mindGro = [
-    {
-        emotion: 'joy'
-    },
-    {
-        emotion: 'anger'
-    },
-    {
-        emotion: 'joy'
-    },
-    {
-        emotion: 'anger'
-    }
-];
+// var mindGro = [
+//     {
+//         emotion: 'joy'
+//     },
+//     {
+//         emotion: 'anger'
+//     },
+//     {
+//         emotion: 'joy'
+//     },
+//     {
+//         emotion: 'sadness'
+//     }
+// ];
+
+var mindGro;
 
 
 //function to pull data for tone analyzer
@@ -76,8 +78,6 @@ function setQuoteData() {
     if(randomQuote.author == null){
         $('#quote-author').text(" - Unknown")
     }
-    
-
 }
 
 // 
@@ -114,7 +114,7 @@ function getLocalStorage() {
 
 // function to add new journal data
 async function setJournalEntry() {
-    console.log("HELLO");
+    $('#modal1').modal('close');
     sentence = $('#entry-page').val();
     $('#entry-page').html("");
     await toneAnalzyer();
@@ -135,13 +135,13 @@ async function setJournalEntry() {
 
 // resets local storage and displays
 function resetData() {
-            window.localStorage.removeItem('mindGro');
-            var journals = $("#journalPage").children().children().children('span');
-            for (let i = 0; i < journals.length; i++) {
-                journals.eq(i).text("");
-                //reset the flower im not sure how im going to do that yet probably just set href to ""
-            }
-            getLocalStorage();
+    window.localStorage.removeItem('mindGro');
+    var journals = $("#journalPage").children().children().children('span');
+    for (let i = 0; i < journals.length; i++) {
+        journals.eq(i).text("");
+        //reset the flower im not sure how im going to do that yet probably just set href to ""
+    }
+    getLocalStorage();
 }
 
 
@@ -149,22 +149,26 @@ function resetData() {
 function getMajorEmotion() {
     var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "default";
     
-    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger" || emotion == "default"){
+    if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
         return emotion;
     }
+
+    return "default";
 }
+
 function init() {
     dailyQuote();
     setJournalData();
+    renderLayer();
 }
 /* Jared - VARIABLES:
 emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
 */
 function renderLayer() {
-    for (var i = mindGro.length - 1; i >= 0; i--) {
+    for (var i = mindGro.journalEntry.length - 1; i >= 0; i--) {
         const img = document.createElement('div');
-        const filePath = getFilePath(i + 1, mindGro[i].emotion);
+        const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
         console.log(filePath);
         img.innerHTML = `<img class="flower" src="${filePath}">`;
         env.appendChild(img);
@@ -214,21 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Collapsible.init(elems);
 });
 
-$(document).scroll(function() {
-    const pos = document.querySelector('.quote-card').getBoundingClientRect().top;
-    // console.log(document.querySelector('.quote-card').getBoundingClientRect().bottom/*  - $(window).scrollTop() */);
-    const inline = $('.inline-quote-card');
-    if (inline.hasClass('hidden') && pos < 0){
-        console.log('UNHIDING');
-        inline.removeClass('hidden');
-        inline.addClass("fix-card");
-        $('.quote-card').addClass('invisible');
-    } else if (!inline.hasClass('hidden') && pos >= 0) {
-        inline.addClass('hidden');
-        $('.quote-card').removeClass('invisible');
-    }
-});
-
 $('#intro').click(function() {
     this.modal();
 });
@@ -240,5 +229,4 @@ $(document).ready(function(){
 
 $('#submitbtn').click(setJournalEntry);
 
-renderLayer();
 init();
