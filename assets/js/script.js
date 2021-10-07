@@ -1,22 +1,28 @@
 var sentence;
 var pulledTone;
 var pulledDailyQuote;
-// var mindGro = {
-//     journalEntires: {
+// var mindGro = [
+//     {
 //         text,
 //         emotion,
 //         journalDay
 //     },
-//     flowerStatus : {
-//         pedal1,
-//         pedal2,
-//         pedal3,
-//         pedal4,
-//         pedal5,
-//     }
-
-
 // }
+
+var mindGro = [
+    {
+        emotion: 'joy'
+    },
+    {
+        emotion: 'joy'
+    },
+    {
+        emotion: 'joy'
+    },
+    {
+        emotion: 'joy'
+    }
+];
 
 
 //function to pull data for tone analyzer
@@ -86,7 +92,21 @@ emotion: string of 'fear', 'sadness', 'joy', or 'anger'
 currentLayer: int 1-5
 */
 function renderLayer() {
+    for (var i = mindGro.length - 1; i >= 0; i--) {
+        const img = document.createElement('div');
+        const filePath = getFilePath(i + 1, mindGro[i].emotion);
+        console.log(filePath);
+        img.innerHTML = `<img class="flower" src="${filePath}">`;
+        env.appendChild(img);
+    }
 
+    const img = document.createElement('div');
+    img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
+    env.appendChild(img);
+}
+
+function getFilePath(layer, tone) {
+    return `./assets/images/${tone}/layer${layer}-${tone}.png`;
 }
 
 const newButton = document.querySelector("#newButton");
@@ -95,6 +115,7 @@ const pageContent = document.querySelector(".page-content");
 const newEntry = document.querySelector(".new-entry");
 const padButton = document.querySelector(".pad-button");
 const glow = document.querySelector(".glow")
+const env = document.querySelector("#env");
 
 padButton.addEventListener("mouseover", function() {
     glow.classList.remove("hidden");
@@ -138,6 +159,13 @@ $(document).scroll(function() {
     }
 });
 
+$('#intro').click(function() {
+    this.modal();
+});
+
 $(document).ready(function(){
-    $('.modal').modal({endingTop:"5%"});
+    $('#modal1').modal({endingTop:"5%"});
+    $('#intro').modal();
   });
+
+renderLayer();

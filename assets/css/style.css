@@ -18,6 +18,13 @@ img {
     left: 0;
 }
 
+.modal-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .flower {
     position: absolute;
     top: 0;
@@ -44,11 +51,15 @@ img {
 
 .journal{
     border: solid black;
+    opacity: rgba(0, 0, 0, 0);
 }
 
 .page{
     padding: 1rem;
-    background-image: url(./pictures/parchment-paper.jpg)
+    /* background-image: url(./pictures/parchment-paper.jpg) */
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    
 }
 
 .page-content {
@@ -70,6 +81,7 @@ li a{
 
 textarea{
     height: 50vh;
+    color: white;
 }
 
 .hidden{
@@ -82,6 +94,7 @@ textarea{
 
 #modal1{
     max-height: 100%;
+    background:rgba(0, 0, 0, .5);
 }
 
 @media screen and (max-width: 1024px)  {
