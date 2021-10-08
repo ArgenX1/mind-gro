@@ -1,5 +1,13 @@
+@font-face {
+    font-family: 'Washington Lifestyle';
+    src: url("../fonts/Washington\ Lifestyle.ttf");
+}
+
 html, body {
     height: 100vh;
+    font-family: 'Washington Lifestyle', sans-serif;
+    font-size: 24px;
+    color: #020429;
 }
 
 
@@ -8,10 +16,16 @@ body {
     object-fit: cover;
 }
 
+h5 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+}
+
 .quote-card {
     background: transparent;
     margin-left: 1rem;
     font-style: italic;
+    font-size: 50px;
 }
 
 .background {
@@ -66,7 +80,7 @@ body {
 .page{
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0);
-    color: white;
+    color: rgb(255, 242, 184);
     position: relative;
 }
 
@@ -95,11 +109,11 @@ body {
     padding: 1rem;
 }
 
-#clear-btn {
+/* #clear-btn {
     position: absolute;
     top: 3%;
     left: 3%;
-}
+} */
 
 li{
     padding: 1rem;
@@ -112,6 +126,39 @@ li a{
 
 .new-entry{
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#newButton {
+    display: flex;
+    flex-direction: column;
+    /* padding-top: 15%; */
+    max-width: 500px;
+    width: 90%;
+    z-index: 1;
+}
+
+#clear-btn {
+    display: flex;
+    flex-direction: column;
+    /* max-width: 20%; */
+    width: 90%;
+    max-width: 400px;
+    z-index: 1;
 }
 
 textarea{
@@ -135,7 +182,31 @@ textarea{
 }
 
 #submitbtn {
+    display: flex;
+    flex-direction: column;
     margin-top: 10px;
+    width: 300px;
+    /* height: 100%; */
+}
+
+.collapsible-header {
+    /* padding: 100px; */
+    background-image: url("../images/buttons/entry-header.png");
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-bottom: none;
+    text-indent: 20px;
+}
+
+.collapsible-body {
+    margin-top: 10px;
+    border-top: 1px solid white;
+}
+
+.collapsible-body span {
+    font-size: 24px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 @media screen and (max-width: 2100px)  {
@@ -145,6 +216,14 @@ textarea{
 }
 
 @media screen and (max-width: 1024px)  {
+    html, body {
+        font-size: 16px;
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
     .btn {
         left: 24%;
         width: 50%;
@@ -161,6 +240,20 @@ textarea{
     .pad-button {
         left: 25%;
         width: 50%
+    }
+
+    .collapsible-body span {
+        font-size: 16px;
+    }
+
+    #quote-author {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    #newButton {
+        margin-top: 20%;
     }
 }
 
