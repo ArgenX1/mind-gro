@@ -97,7 +97,7 @@ async function setJournalEntry() {
 
     const majorEmotion = getMajorEmotion();
 
-    if (mindGro.journalEntry.length >= 4)
+    if (mindGro.journalEntry.length >= 5)
         { clearEntries() }
 
         mindGro.journalEntry[mindGro.journalEntry.length] = {
@@ -117,13 +117,14 @@ function clearEntries() {
 }
 
 function getMajorEmotion() {
-    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "joy";
+    console.log(pulledTone);
+    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "neutral";
     
     if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
         return emotion;
     }
 
-    return "joy";
+    return "neutral";
 }
 
 function init() {
@@ -138,21 +139,20 @@ function renderLayer() {
         const img = document.createElement('div');
         const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
         console.log(filePath);
-        img.innerHTML = `<img class="flower" src="${filePath}">`;
+        if (mindGro.journalEntry.length === 5 && i === 0) {
+            img.innerHTML = `<img class="flower background" src="./assets/images/${mindGro.journalEntry[i].emotion}/bud-${mindGro.journalEntry[i].emotion}.png">`;
+        } else {
+            img.innerHTML = `<img class="flower background" src="${filePath}">`;
+        }
         env.appendChild(img);
     }
 
     for (var i = 0; i < mindGro.journalEntry.length; i++) {
+        const curEmotion = mindGro.journalEntry[i].emotion.toUpperCase();
         const entry = document.createElement('li');
         entry.classList.add('journal-entry');
-        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${i + 1}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
+        entry.innerHTML = `<div class="collapsible-header transparent">Day ${i + 1} - ${curEmotion}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
         journalPage.appendChild(entry);
-    }
-    
-    if (mindGro.journalEntry.length) {
-        const img = document.createElement('div');
-        img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
-        env.appendChild(img);
     }
 }
 
@@ -173,14 +173,16 @@ function getFilePath(layer, tone) {
 }
 
 const newButton = document.querySelector("#newButton");
-const backButton = document.querySelector("#backButton")
+const backButton = document.querySelector("#backButton");
 const pageContent = document.querySelector(".page-content");
 const newEntry = document.querySelector(".new-entry");
 const padButton = document.querySelector(".pad-button");
-const glow = document.querySelector(".glow")
+const glow = document.querySelector(".glow");
 const env = document.querySelector("#env");
 const clearButton = document.querySelector("#clear-btn");
 const journalPage = document.querySelector("#journalPage");
+const newEntryBtn = document.querySelector("#new-entry-btn");
+const deleteBtnImg = document.querySelector('#delete-btn-img');
 
 padButton.addEventListener("mouseover", function() {
     glow.classList.remove("hidden");
@@ -190,10 +192,21 @@ padButton.addEventListener("mouseout", function() {
     glow.classList.add("hidden");
 });
 
+padButton.addEventListener("click", function() {
+    pageContent.classList.remove("hidden");
+    newEntry.classList.add("hidden");
+    newButton.classList.remove("hidden");
+    newEntryBtn.classList.remove("hidden");
+    deleteBtnImg.classList.remove("hidden");
+    backButton.classList.add("hidden");
+});
+
 newButton.addEventListener("click", function() {
     pageContent.classList.add("hidden");
     newEntry.classList.remove("hidden");
     newButton.classList.add("hidden");
+    newEntryBtn.classList.add("hidden");
+    deleteBtnImg.classList.add("hidden");
     backButton.classList.remove("hidden");
 });
 
@@ -201,7 +214,9 @@ backButton.addEventListener("click", function() {
     pageContent.classList.remove("hidden");
     newEntry.classList.add("hidden");
     newButton.classList.remove("hidden");
-    backButton.classList.add("hidden")
+    newEntryBtn.classList.remove("hidden");
+    deleteBtnImg.classList.remove("hidden");
+    backButton.classList.add("hidden");
 });
 
 clearButton.addEventListener("click", clearEntries)
@@ -218,14 +233,21 @@ $('#intro').click(function() {
 $(document).ready(function(){
     $('#modal1').modal({endingTop:"5%"});
     $('#intro').modal();
-  });
+});
 
 $('#submitbtn').click(async function() {
-    pageContent.classList.remove("hidden");
-    newEntry.classList.add("hidden");
-    newButton.classList.remove("hidden");
-    backButton.classList.add("hidden")
+    // pageContent.classList.remove("hidden");
+    // newEntry.classList.add("hidden");
+    // newButton.classList.remove("hidden");
+    // backButton.classList.add("hidden");
     await setJournalEntry();
 });
+
+// $('.exit').click(function() {
+//     pageContent.classList.remove("hidden");
+//     newEntry.classList.add("hidden");
+//     newButton.classList.remove("hidden");
+//     backButton.classList.add("hidden");
+// });
 
 init();
