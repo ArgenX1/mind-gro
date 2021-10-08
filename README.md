@@ -42,6 +42,6 @@ https://github.com/ArgenX1/mind-gro
 
 https://argenx1.github.io/mind-gro/
 
-![screenshot1](assets\screenshot1.png)
+![screenshot1](.\assets\screenshot1.jpg)
 
-![screenshot2](assets\screenshot2.png)
+![screenshot2](.\assets\screenshot2.jpg)
