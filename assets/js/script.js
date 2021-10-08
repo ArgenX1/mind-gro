@@ -97,7 +97,7 @@ async function setJournalEntry() {
 
     const majorEmotion = getMajorEmotion();
 
-    if (mindGro.journalEntry.length >= 4)
+    if (mindGro.journalEntry.length >= 5)
         { clearEntries() }
 
         mindGro.journalEntry[mindGro.journalEntry.length] = {
@@ -117,13 +117,14 @@ function clearEntries() {
 }
 
 function getMajorEmotion() {
-    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "joy";
+    console.log(pulledTone);
+    var emotion = pulledTone.document_tone.tones.length > 0 ? pulledTone.document_tone.tones[0].tone_id : "neutral";
     
     if(emotion == "joy" || emotion == "fear" || emotion == "sadness" || emotion == "anger"){
         return emotion;
     }
 
-    return "joy";
+    return "neutral";
 }
 
 function init() {
@@ -138,21 +139,20 @@ function renderLayer() {
         const img = document.createElement('div');
         const filePath = getFilePath(i + 1, mindGro.journalEntry[i].emotion);
         console.log(filePath);
-        img.innerHTML = `<img class="flower" src="${filePath}">`;
+        if (mindGro.journalEntry.length === 5 && i === 0) {
+            img.innerHTML = `<img class="flower background" src="./assets/images/${mindGro.journalEntry[i].emotion}/bud-${mindGro.journalEntry[i].emotion}.png">`;
+        } else {
+            img.innerHTML = `<img class="flower background" src="${filePath}">`;
+        }
         env.appendChild(img);
     }
 
     for (var i = 0; i < mindGro.journalEntry.length; i++) {
+        const curEmotion = mindGro.journalEntry[i].emotion.toUpperCase();
         const entry = document.createElement('li');
         entry.classList.add('journal-entry');
-        entry.innerHTML = `<div class="collapsible-header brown white-text"><i class="material-icons">filter_vintage</i>Day ${i + 1}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
+        entry.innerHTML = `<div class="collapsible-header teal lighten-2 white-text"><i class="material-icons">filter_vintage</i>Day ${i + 1} - ${curEmotion}</div><div class="collapsible-body"><span>${mindGro.journalEntry[i].entry}</span></div>`;
         journalPage.appendChild(entry);
-    }
-    
-    if (mindGro.journalEntry.length) {
-        const img = document.createElement('div');
-        img.innerHTML = '<img class="flower" src="./assets/images/middle.png">';
-        env.appendChild(img);
     }
 }
 
