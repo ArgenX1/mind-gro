@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="./assets/css/materialize.min.css"  media="screen,projection"/>
         <link rel="stylesheet" href="./assets/css/style.css"/>
@@ -23,40 +26,39 @@
         </div>
 
         <div id="env">    
-            <img src="./assets/images/vulvic.png">
-            <img class="hidden glow" src="./assets/images/glow.png">
-            <img src="./assets/images/lilypads.png">
+            <img class="background" src="./assets/images/background.png">
+            <img class="hidden glow background" src="./assets/images/mist.png">
+            <img class="background" src="./assets/images/lilypad.png">
         </div>
 
         <a class="pad-button modal-trigger" data-target="modal1"></a>
-        
-
 
         <!-- Modal Structure -->
         <div id="modal1" class="modal bottom-sheet">
             <section class="journal">
+                <a href="#!" class="modal-close exit"><img src="assets/images/buttons/exit.png" /></a>
+                <a href="#!" id="backButton" class="hidden back-btn"><img src="assets/images/buttons/back.png" /></a>
                 <div class="page">
                     <div class="page-content">
                         <div class="row">
-                            <a href="#!" id="clear-btn" class="modal-close waves-effect waves-light btn-large brown col s2">Clear</a>
                             <h2 class="center-align">Mind Gro Journal</h2>
-                            <p class="center-align">Using descriptive language, take time to reflect on how your day went or how you want it to go.</p>
+                            <h5 class="center-align">Using descriptive language, take time to reflect on your day as it relates to joy, sadness, fear, or anger.</h5>
                             <ul class="collapsible popout" id="journalPage"></ul>
                         </div>
                     </div>
                     <div class="new-entry hidden">
                         <textarea id="entry-page"></textarea>
-                        <div class="row">
-                            <button class="btn-large waves-effect waves-light brown col s6 offset-s3" type="click" name="action" id="submitbtn">Submit</button>
-                        </div>
+                        <a href="#!" id="submitbtn"><img src="assets/images/buttons/submit.png" /></a>
+                        <!-- <div class="row">
+                            <button class="btn-large waves-effect waves-light teal lighten-2 col s6 offset-s3" type="click" name="action" id="submitbtn">Submit</button>
+                        </div> -->
                     </div>
                     <div class="controls row">
-                        <div class="col s12 m6">
-                            <a class="waves-effect waves-light btn-large brown hidden col s12" id="backButton">Back</a>
-                            <a class="waves-effect waves-light btn-large brown col s12" id="newButton">New Journal Entry</a>
+                        <div class="col s6 control">
+                            <a href="#!" id="newButton"><img id="new-entry-btn" src="assets/images/buttons/new-entry.png" /></a>
                         </div>
-                        <div class="col s12 m6">
-                            <a href="#!" class="modal-close waves-effect waves-light btn-large brown col s12">Exit</a>
+                        <div class="col s6 control">
+                            <a href="#!" id="clear-btn" class="modal-close"><img id="delete-btn-img" src="assets/images/buttons/delete.png"></a>
                         </div>
                     </div>
                 </div>
